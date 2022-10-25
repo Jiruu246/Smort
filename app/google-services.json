@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "765968428493",
+    "project_id": "smort-84011",
+    "storage_bucket": "smort-84011.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765968428493:android:5a4113fdaa8a494d246884",
+        "android_client_info": {
+          "package_name": "au.com.smort"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765968428493-emvkq3gk34ud5d0jhtjmkhf617uu74te.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2dBJrqfKz33rHYdbYTX-JqOp7smpW6ds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765968428493-emvkq3gk34ud5d0jhtjmkhf617uu74te.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

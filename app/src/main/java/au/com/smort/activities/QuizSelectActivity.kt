@@ -22,16 +22,4 @@ class QuizSelectActivity : AppCompatActivity() {
 
     }
 
-//    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//        if(result.resultCode == Activity.RESULT_OK){
-//
-////            val data = result.data
-////            var location = data?.getParcelableExtra<Location>("location")
-////
-////            if (location != null) {
-////                locations[location.id] = location
-////            }
-//
-//        }
-//    }
 }
