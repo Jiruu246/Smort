@@ -6,17 +6,24 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import au.com.smort.R
+import au.com.smort.activities.dialogs.ErrorDialog
 import au.com.smort.activities.dialogs.LoadingDialog
 import au.com.smort.fragments.QuestionAnswer
 import au.com.smort.interfaces.QuizAPI
 import au.com.smort.interfaces.AnswerSelectedListener
 import au.com.smort.models.Quiz
 import au.com.smort.models.QuizRound
+import au.com.smort.repository.QuizRepository
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -24,6 +31,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 const val BASE_URL = "https://quizzybankky.herokuapp.com/"
 
 class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSelectedListener {
+
+    //repository
+//    private val quizRepository: QuizRepository = QuizRepository(getDatabase(application))
+
+    //FireStore
+    private val database = Firebase.firestore
 
     //variables
     private var questions: List<Quiz>? = null
@@ -34,6 +47,7 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
     //UI declare
     lateinit var skipBtn: Button
     lateinit var healthBar: ProgressBar
+    lateinit var healthCount: TextView
     lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,15 +59,18 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
         skipBtn.setOnClickListener(this)
 
         healthBar = findViewById(R.id.healthBar)
+        healthCount = findViewById(R.id.tvHealtCount)
         healthBar.max = crntRound.maxHealth
         healthBar.progress = crntRound.crntHealth
+        healthCount.text = crntRound.maxHealth.toString()
 
         //LoadDing Activity
         loadingDialog = LoadingDialog(this)
         loadingDialog.startLoading()
 
-        getQuestion()
+        getQuestionFromRepo()
     }
+
 
     private fun getQuestion(){
         val api = Retrofit.Builder()
@@ -76,6 +93,47 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
                 loadingDialog.dismissDialog()
             }
         }
+    }
+
+    /*
+    New function from repository pattern
+     */
+    private fun getQuestionFromRepo(){
+        val api = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(QuizAPI::class.java)
+
+        val quizDocument = database.collection("quizzes")
+
+        GlobalScope.launch(Dispatchers.IO + coroutineExceptionHandler){
+            val respond = api.getQuiz("10", "Programming", "easy", "multiple-choice")
+            if (respond.isSuccessful) {
+                questions = respond.body()!!.data
+                maxQ = questions!!.count()
+
+                for(q in questions!!){
+                    q.generateAnswer()
+                }
+
+                //FireStore
+//                for (q in questions!!){
+//                    quizDocument.document("${q.id}").set(q).await()
+//                }
+
+//                Log.d("mtest", "${questions?.get(0)?.all_answers}")
+                nextQuestion()
+                loadingDialog.dismissDialog()
+            }
+        }
+    }
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, throwable ->
+        Log.d("coroutine","CoroutineExceptionHandler got $throwable")
+        loadingDialog.dismissDialog()
+//        val errorDialog = ErrorDialog(this)
+//        errorDialog.startDialog()
     }
 
     /*
@@ -132,5 +190,6 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
     private fun takeDamage(dame: Int){
         crntRound.crntHealth -= dame
         healthBar.progress = crntRound.crntHealth
+        healthCount.text = crntRound.crntHealth.toString()
     }
 }

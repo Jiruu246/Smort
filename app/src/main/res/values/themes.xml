@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Smort" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Smort" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
@@ -14,11 +14,10 @@
         <!-- Customize your theme here. -->
     </style>
     
-    <style name="borderButton">
+    <style name="borderButton" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">15sp</item>
         <item name="android:paddingVertical">12sp</item>
-        <item name="android:stateListAnimator">@null</item>
         <item name="android:textColor">@color/primary_dark</item>
         <item name="android:backgroundTint">@android:color/transparent</item>
         <item name="android:foreground">@drawable/bordered_button</item>
@@ -28,16 +27,14 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">15sp</item>
         <item name="android:paddingVertical">12sp</item>
-        <item name="android:stateListAnimator">@null</item>
         <item name="android:textColor">@color/nordwhite</item>
         <item name="android:background">@drawable/solid_button</item>
     </style>
 
-    <style name="borderButton_thin">
+    <style name="borderButton_thin" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
         <item name="android:paddingVertical">12sp</item>
-        <item name="android:stateListAnimator">@null</item>
         <item name="android:textColor">@color/accent</item>
         <item name="android:backgroundTint">@android:color/transparent</item>
         <item name="android:foreground">@drawable/bordered_button_thin</item>
@@ -51,6 +48,18 @@
     <style name="Header2">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="tabRounded">
+        <item name="tabIndicator">@null</item>
+        <item name="tabBackground">@drawable/selected_tab</item>
+        <item name="tabTextColor">@color/offline</item>
+        <item name="tabTextAppearance">@style/tab_text</item>
+    </style>
+
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

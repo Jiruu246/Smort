@@ -45,9 +45,12 @@ class ResultActivity : AppCompatActivity(), View.OnClickListener{
     override fun onClick(view: View?) {
         when(view?.id){
             R.id.btnRetry -> {
+
                 startActivity(Intent(this, QuizTakingActivity::class.java))
             }
-            R.id.btnContinue -> startActivity(Intent(this, QuizSelectActivity::class.java))
+            R.id.btnContinue -> {
+                finish()
+            }
         }
     }
 }
