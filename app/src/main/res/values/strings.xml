@@ -10,7 +10,7 @@
     <string name="result">Result</string>
     <string name="retry">Retry</string>
     <string name="cntinue">Continue</string>
-    <string name="checkans"><u>See explaination >></u></string>
+    <string name="checkans">See explaination >></string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="login">LOG IN</string>
 </resources>

@@ -118,9 +118,9 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
                 }
 
                 //FireStore
-//                for (q in questions!!){
-//                    quizDocument.document("${q.id}").set(q).await()
-//                }
+                for (q in questions!!){
+                    quizDocument.document("${q.id}").set(q).await()
+                }
 
 //                Log.d("mtest", "${questions?.get(0)?.all_answers}")
                 nextQuestion()
@@ -132,6 +132,7 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
     private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, throwable ->
         Log.d("coroutine","CoroutineExceptionHandler got $throwable")
         loadingDialog.dismissDialog()
+        finish()
 //        val errorDialog = ErrorDialog(this)
 //        errorDialog.startDialog()
     }
@@ -157,6 +158,7 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
             finish()
             val intent = Intent(this, ResultActivity::class.java)
             intent.putExtra("round", crntRound)
+
             startActivity(intent)
         }
 

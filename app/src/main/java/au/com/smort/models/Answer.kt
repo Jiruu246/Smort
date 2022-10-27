@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Answer(
-    val text: String,
+    val text: String = "",
     @field:JvmField
-    val isCorrect: Boolean
+    val isCorrect: Boolean = false
 ) : Parcelable {
 }

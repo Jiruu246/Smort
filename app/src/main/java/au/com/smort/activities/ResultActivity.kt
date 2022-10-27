@@ -14,6 +14,7 @@ class ResultActivity : AppCompatActivity(), View.OnClickListener{
     lateinit var tvCorrect: TextView
     lateinit var tvSkip: TextView
     lateinit var tvWrong: TextView
+    lateinit var tvExplain: TextView
 
     lateinit var btnRetry: Button
     lateinit var btnContinue: Button
@@ -26,11 +27,14 @@ class ResultActivity : AppCompatActivity(), View.OnClickListener{
         tvCorrect = findViewById(R.id.tvCorrectScore)
         tvSkip = findViewById(R.id.tvSkippedScore)
         tvWrong = findViewById(R.id.tvWrongScore)
+        tvExplain = findViewById(R.id.tvExplain)
 
         btnRetry = findViewById(R.id.btnRetry)
         btnRetry.setOnClickListener(this)
         btnContinue = findViewById(R.id.btnContinue)
         btnContinue.setOnClickListener(this)
+        tvExplain = findViewById(R.id.tvExplain)
+        tvExplain.setOnClickListener(this)
 
         var quizRound = intent.getParcelableExtra<QuizRound>("round")
 
@@ -45,11 +49,14 @@ class ResultActivity : AppCompatActivity(), View.OnClickListener{
     override fun onClick(view: View?) {
         when(view?.id){
             R.id.btnRetry -> {
-
+                finish()
                 startActivity(Intent(this, QuizTakingActivity::class.java))
             }
             R.id.btnContinue -> {
                 finish()
+            }
+            R.id.tvExplain -> {
+                startActivity(Intent(this, CheckAnswerActivity::class.java))
             }
         }
     }
