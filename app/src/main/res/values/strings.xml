@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Smort</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="shared_preference_quiz">currentQuiz</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="skip">Skip</string>
     <string name="roundcmplt">Round Complete</string>
@@ -13,4 +14,8 @@
     <string name="checkans">See explaination >></string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="login">LOG IN</string>
+    <string name="easy">Easy</string>
+    <string name="hard">Hard</string>
+    <string name="medium">Medium</string>
+    <string name="start">Start Quiz</string>
 </resources>

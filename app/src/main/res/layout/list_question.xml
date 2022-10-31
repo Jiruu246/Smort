@@ -13,7 +13,7 @@
     android:id="@+id/list_item">
 
     <TextView
-        android:id="@+id/tvQuestionNumber_list"
+        android:id="@+id/tvQuestionNumber"
         style="@style/Header1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvQuestion_list"
+        android:id="@+id/tvQuestionTitle"
         style="@style/Header1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,10 +37,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestionNumber_list" />
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestionNumber" />
 
     <TextView
-        android:id="@+id/tvAnswer_list"
+        android:id="@+id/tvCorrectAns"
         android:textColor="@color/green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestion_list" />
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestionTitle" />
 
     <GridLayout
         android:id="@+id/gridlayout"

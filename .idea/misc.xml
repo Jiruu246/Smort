@@ -32,8 +32,9 @@
         <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/fragment_dashboard.xml" value="0.3625" />
         <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/fragment_leaderboard.xml" value="0.3625" />
         <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/fragment_question_answer.xml" value="0.25" />
-        <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/fragment_quiz_select.xml" value="0.3625" />
+        <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/fragment_quiz_select.xml" value="0.14066496163682865" />
         <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/list_question.xml" value="0.33" />
+        <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/list_question_bundle.xml" value="0.25" />
         <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/list_quiz.xml" value="0.2965811965811966" />
         <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/loading_screen.xml" value="0.5" />
         <entry key="..\:/Software-dev-Mobile/Smort/app/src/main/res/layout/quiz_explaination_dialog.xml" value="0.3614583333333333" />

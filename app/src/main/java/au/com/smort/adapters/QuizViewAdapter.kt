@@ -25,9 +25,9 @@ class QuizViewAdapter(private val quizzes: List<Quiz>, private val listener: Qan
         var vitem: ConstraintLayout
         var vExpand: GridLayout
         init {
-            tvTitle = itemview.findViewById(R.id.tvQuestionNumber_list)
-            vQuestion = itemview.findViewById(R.id.tvQuestion_list)
-            vAnswer = itemview.findViewById(R.id.tvAnswer_list)
+            tvTitle = itemview.findViewById(R.id.tvQuestionNumber)
+            vQuestion = itemview.findViewById(R.id.tvQuestionTitle)
+            vAnswer = itemview.findViewById(R.id.tvCorrectAns)
             vCorrect = itemview.findViewById(R.id.tvCorrectAns_list)
             vExplain = itemview.findViewById(R.id.tvExplain_list)
             vitem = itemview.findViewById(R.id.list_item)
