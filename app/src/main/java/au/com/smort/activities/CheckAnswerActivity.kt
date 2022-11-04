@@ -48,7 +48,7 @@ class CheckAnswerActivity : AppCompatActivity(), QandASelectedListenter {
 
             }
             .addOnFailureListener{e ->
-                Log.w("CheckHere", "Error exception", e)
+                Log.w("warning", "Error exception", e)
             }
 
 

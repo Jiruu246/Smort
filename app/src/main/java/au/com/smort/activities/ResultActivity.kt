@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import au.com.smort.R
+import au.com.smort.models.Quiz
+import au.com.smort.models.QuizBundle
 import au.com.smort.models.QuizRound
 
 class ResultActivity : AppCompatActivity(), View.OnClickListener{
@@ -18,6 +20,8 @@ class ResultActivity : AppCompatActivity(), View.OnClickListener{
 
     lateinit var btnRetry: Button
     lateinit var btnContinue: Button
+
+    lateinit var fQuizBundle: QuizBundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +41,7 @@ class ResultActivity : AppCompatActivity(), View.OnClickListener{
         tvExplain.setOnClickListener(this)
 
         var quizRound = intent.getParcelableExtra<QuizRound>("round")
+        fQuizBundle = intent.getParcelableExtra("quizBundle")!!
 
         quizRound?.let {
             tvScore.text = it.Score.toString()
@@ -50,7 +55,7 @@ class ResultActivity : AppCompatActivity(), View.OnClickListener{
         when(view?.id){
             R.id.btnRetry -> {
                 finish()
-                startActivity(Intent(this, QuizTakingActivity::class.java))
+                startActivity(Intent(this, QuizTakingActivity::class.java).putExtra("quizBundle", fQuizBundle))
             }
             R.id.btnContinue -> {
                 finish()

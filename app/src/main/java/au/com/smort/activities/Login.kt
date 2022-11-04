@@ -81,8 +81,6 @@ class Login : AppCompatActivity() {
                         updateUI(null)
                     }
                 }
-
-
             }
         }else{
             Toast.makeText(this, task.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -92,8 +90,7 @@ class Login : AppCompatActivity() {
     private fun updateUI(firebaseUser: FirebaseUser?) {
         firebaseUser?.let {
             val intent = Intent(this, QuizSelectActivity::class.java)
-            intent.putExtra("email", firebaseUser.email)
-            intent.putExtra("username", firebaseUser.displayName)
+            intent.putExtra("user", firebaseUser)
             finish()
             startActivity(intent)
         }

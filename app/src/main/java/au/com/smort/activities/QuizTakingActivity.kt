@@ -17,7 +17,9 @@ import au.com.smort.fragments.QuestionAnswer
 import au.com.smort.interfaces.QuizAPI
 import au.com.smort.interfaces.AnswerSelectedListener
 import au.com.smort.models.Quiz
+import au.com.smort.models.QuizBundle
 import au.com.smort.models.QuizRound
+import com.google.firebase.firestore.WriteBatch
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
@@ -40,6 +42,7 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
     private val database = Firebase.firestore
 
     //variables
+    private lateinit var fQuizBundle: QuizBundle
     private var fQuizzes: List<Quiz>? = null
     private var index: Int = -1
     private var crntRound = QuizRound()
@@ -56,6 +59,10 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_taking)
+
+        //get intent
+        fQuizBundle = intent.getParcelableExtra<QuizBundle>("quizBundle")!!
+
 
         //UI create
         skipBtn = findViewById(R.id.skipQbtn)
@@ -91,12 +98,38 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
         GlobalScope.launch(Dispatchers.IO + coroutineExceptionHandler){
 
             //Getting the quizzes from API
-            fQuizzes = RetrofitSingleton.refreshQuiz()
+
+            fQuizzes = RetrofitSingleton.refreshQuiz(fQuizBundle.category, fQuizBundle.level)
 
             fQuizzes?.let {
                 crntRound.maxQuestion = it.count()
 
                 //save to database
+                val quizDocument = database.collection("quizzes")
+
+                //delete old data first
+                quizDocument.get().addOnSuccessListener { result ->
+                    val batch: WriteBatch = database.batch()
+                    for(r in result){
+                        batch.delete(r.reference)
+                    }
+
+                    batch.commit().addOnSuccessListener {
+                        Log.d("onSuccess", "batch delete complete")
+                    }
+                }
+
+                val saveTodatabase =  launch {
+                    //FireStore
+                    for (q in fQuizzes!!){
+                        quizDocument.document("${q.id}").set(q).await()
+                    }
+                }
+                saveTodatabase.invokeOnCompletion { cause: Throwable? ->
+                    if(cause != null){
+                        Log.w("FAIL to add document", "Erro adding document", cause)
+                    }
+                }
 
                 //start the quiz
                 nextQuestion()
@@ -104,6 +137,8 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
             }
         }
     }
+
+
 
     /*
     New function from repository pattern
@@ -213,13 +248,11 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
             SharedPreference.edit().remove("currentQuiz").apply()
             finish()
             val intent = Intent(this, ResultActivity::class.java)
+            intent.putExtra("quizBundle", fQuizBundle)
             intent.putExtra("round", crntRound)
 
             startActivity(intent)
         }
-
-
-
     }
 
     override fun onClick(view: View?) {
@@ -227,7 +260,7 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
             R.id.skipQbtn -> {
                 takeDamage(10)
                 crntRound.countSkipped++
-                crntRound.Score -= 10
+                crntRound._score -= 10
                 nextQuestion()
             }
         }
@@ -237,11 +270,11 @@ class QuizTakingActivity : AppCompatActivity(), View.OnClickListener, AnswerSele
         if (isCorrect){
             Log.d("results", "you just click on correct answer")
             crntRound.countCorrected++
-            crntRound.Score += 10
+            crntRound._score += 10
         }else{
             Log.d("results", "that's wrong")
             crntRound.countWrong++
-            crntRound.Score -= 10
+            crntRound._score -= 10
             takeDamage(10)
         }
         nextQuestion()

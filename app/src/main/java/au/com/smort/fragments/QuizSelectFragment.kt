@@ -22,12 +22,12 @@ class QuizSelectFragment : Fragment(), BundleSelectedListener {
         super.onCreate(savedInstanceState)
 
         category = arrayOf(
-            QuizBundle("Programming", "Sample text"),
-            QuizBundle("Mathematics", "Sample text"),
-            QuizBundle("Biology", "Sample text"),
-            QuizBundle("Chemistry", "Sample text"),
-            QuizBundle("History", "Sample text"),
-            QuizBundle("General Knowledge", "Sample text"),
+            QuizBundle("Programming", "Sample text", "easy"),
+            QuizBundle("Mathematics", "Sample text", "easy"),
+            QuizBundle("Biology", "Sample text", "easy"),
+            QuizBundle("Chemistry", "Sample text", "easy"),
+            QuizBundle("History", "Sample text", "easy"),
+            QuizBundle("General Knowledge", "Sample text", "easy"),
         )
     }
 
@@ -49,6 +49,7 @@ class QuizSelectFragment : Fragment(), BundleSelectedListener {
 
     override fun onBundleSelected(bundle: QuizBundle) {
         val intent = Intent(activity, QuizTakingActivity::class.java)
+        intent.putExtra("quizBundle", bundle)
         startActivity(intent)
     }
 

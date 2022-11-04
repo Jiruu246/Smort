@@ -32,7 +32,7 @@ class QuizSelectActivity : AppCompatActivity() {
             QuizSelectFragment(),
             LeaderboardFragment()
         )
-        adapter= ViewPagerAdapter(supportFragmentManager, lifecycle, fragments)
+        adapter = ViewPagerAdapter(supportFragmentManager, lifecycle, fragments)
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager, object: TabLayoutMediator.TabConfigurationStrategy{

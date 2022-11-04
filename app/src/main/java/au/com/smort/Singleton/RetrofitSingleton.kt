@@ -15,45 +15,25 @@ object RetrofitSingleton {
 
     const val BASE_URL = "https://quizzybankky.herokuapp.com/"
 
-    private lateinit var fAPI: QuizAPI
-
-    init {
-        fAPI = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(QuizAPI::class.java)
-    }
+    private var fAPI: QuizAPI = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(QuizAPI::class.java)
 
     //get the Quiz using API
-    suspend fun refreshQuiz(): List<Quiz>?{
+    suspend fun refreshQuiz(category: String, difficulty: String): List<Quiz>?{
         var lQuiz: List<Quiz>? = null
 
-        val respond = fAPI.getQuiz("10", "Programming", "easy", "multiple-choice")
+        val respond = fAPI.getQuiz("10", category, difficulty, "multiple-choice")
         if (respond.isSuccessful) {
 
                 lQuiz = respond.body()!!.data
-
-//                maxQ = questions!!.count()
 
                 for(q in lQuiz!!){
                     q.generateAnswer()
                 }
 
-//                val saveTodatabase =  launch {
-//                    //FireStore
-//                    for (q in questions!!){
-//                        quizDocument.document("${q.id}").set(q).await()
-//                    }
-//                }
-//                saveTodatabase.invokeOnCompletion { cause: Throwable? ->
-//                    if(cause != null){
-//                        Log.w("FAIL to add document", "Erro adding document", cause)
-//                    }
-//                }
-
-//                nextQuestion()
-//                loadingDialog.dismissDialog()
         }
 
         return lQuiz

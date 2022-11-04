@@ -13,4 +13,13 @@ class QuizRound(
     var crntHealth: Int = 100,
     var maxQuestion: Int = 0): Parcelable {
 
+    var _score: Int = 0
+        set(value) {
+            if(value < 0){
+                field = 0
+            }else{
+                field = _score
+            }
+            Score = field
+        }
 }

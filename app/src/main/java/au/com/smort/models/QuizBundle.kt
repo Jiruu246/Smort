@@ -1,4 +1,8 @@
 package au.com.smort.models
 
-data class QuizBundle(val title: String, val description: String) {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class QuizBundle(val category: String, val description: String, var level: String) : Parcelable{
 }
